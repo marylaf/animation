@@ -1,9 +1,13 @@
-import './App.css';
+import './index.css';
 import Visualisation from "./Visualisation";
+import Register from "./Form";
 
 function App() {
   return (
-   <Visualisation />
+    <div>
+      <Visualisation />
+      <Register />
+    </div>
   );
 }
 
