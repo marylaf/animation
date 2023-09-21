@@ -2,7 +2,8 @@ import React, { useEffect, useRef, useMemo } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
-function Visualisation() {
+function Visualisation({radius, height, segments}) {
+
   const mount = useRef(null);
 
   const { scene, camera, renderer, geometry, material, cone } = useMemo(() => {
@@ -20,7 +21,7 @@ function Visualisation() {
     camera.position.z = 15;
     orbit.update();
 
-    const geometry = new THREE.ConeGeometry(2, 10, 20);
+    const geometry = new THREE.ConeGeometry(radius, height, segments);
     const material = new THREE.MeshStandardMaterial({ color: 0xffc0Cb });
     const cone = new THREE.Mesh(geometry, material);
     
@@ -34,7 +35,7 @@ function Visualisation() {
     scene.add(directionalLight);
 
     return { scene, camera, renderer, geometry, material, cone };
-  }, []);
+  }, [radius, height, segments]);
 
   useEffect(() => {
     // Добавляем рендерер в контейнер
@@ -54,6 +55,13 @@ function Visualisation() {
     animate();
 
   }, [scene, camera, renderer, geometry, material, cone]);
+
+  useEffect(() => {
+    // Обновляем геометрию конуса
+    geometry.dispose();
+    const newGeometry = new THREE.ConeGeometry(radius, height, segments);
+    cone.geometry = newGeometry;
+  }, [height, radius, segments]);
 
   return <div className='cone' ref={mount}></div>;
 }

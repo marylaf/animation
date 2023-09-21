@@ -1,35 +1,7 @@
-import { useState } from "react";
 import { api } from "./utils/Api";
+import React from 'react';
 
-function Register() {
-  const [height, setHeight] = useState("");
-  const [radius, setRadius] = useState("");
-  const [segments, setSegments] = useState("");
-  const [isValid, setIsValid] = useState(false);
-
-  function handleHeightChange(e) {
-    setHeight(e.target.value);
-    disableButton(height, radius, e.target.value);
-  }
-
-  function handleRadiusChange(e) {
-    setRadius(e.target.value);
-    disableButton(height, radius, e.target.value);
-  }
-
-  function handleSegmentsChange(e) {
-    setSegments(e.target.value);
-    disableButton(height, radius, e.target.value);
-  }
-  
-  function disableButton(heightValue, radiusValue, segmentsValue) {
-    if (heightValue === '' || radiusValue === '' || segmentsValue === '') {
-      setIsValid(false);
-    } else {
-      setIsValid(true);
-    }
-  }
-
+function Form({isValid, height, radius, segments, handleHeightChange, handleRadiusChange, handleSegmentsChange}) {
 
   function handleSubmit(evt) {
     evt.preventDefault();
@@ -103,4 +75,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default Form;
