@@ -1,28 +1,50 @@
-import { Link } from "react-router-dom";
 import { useState } from "react";
+import { api } from "./utils/Api";
 
-function Register({ }) {
+function Register() {
   const [height, setHeight] = useState("");
   const [radius, setRadius] = useState("");
   const [segments, setSegments] = useState("");
+  const [isValid, setIsValid] = useState(false);
 
   function handleHeightChange(e) {
     setHeight(e.target.value);
+    disableButton(height, radius, e.target.value);
   }
 
   function handleRadiusChange(e) {
     setRadius(e.target.value);
+    disableButton(height, radius, e.target.value);
   }
 
   function handleSegmentsChange(e) {
     setSegments(e.target.value);
+    disableButton(height, radius, e.target.value);
+  }
+  
+  function disableButton(heightValue, radiusValue, segmentsValue) {
+    if (heightValue === '' || radiusValue === '' || segmentsValue === '') {
+      setIsValid(false);
+    } else {
+      setIsValid(true);
+    }
   }
 
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    // handleRegister(userEmail, userPassword);
+    
+    api.editCone(height, radius, segments)
+      .then((res) => {
+        console.log("Успешно");
+      })
+      .catch((error) => {
+        console.error("Ошибка:", error);
+      });
   }
+  
+
+
 
   return (
     <div className="login">
@@ -40,8 +62,8 @@ function Register({ }) {
           className="login__info login__info_form_title"
           id="title-input"
           placeholder="Высота"
-          minLength="6"
-          maxLength="40"
+          minLength="1"
+          maxLength="10"
           required
         />
         <span className="span title-input-error"></span>
@@ -52,8 +74,8 @@ function Register({ }) {
           className="login__info login__info_form_subtitle"
           id="subtitle-input"
           placeholder="Радиус"
-          minLength="6"
-          maxLength="40"
+          minLength="1"
+          maxLength="10"
           required
         />
         <span className="span subtitle-input-error"></span>
@@ -64,14 +86,15 @@ function Register({ }) {
           className="login__info login__info_form_subtitle"
           id="subtitle-input"
           placeholder="Кол-во сегментов"
-          minLength="6"
-          maxLength="40"
+          minLength="1"
+          maxLength="10"
           required
         />
         <span className="span subtitle-input-error"></span>
         <button
           type="submit"
-          className="login__button-save"
+          disabled={!isValid}
+          className={`login__button-save ${isValid ? '' : 'login__button-save_disabled'}`}
         >
           Задизайнить
         </button>
