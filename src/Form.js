@@ -1,23 +1,7 @@
-import { api } from "./utils/Api";
 import React from 'react';
 
-function Form({isValid, height, radius, segments, handleHeightChange, handleRadiusChange, handleSegmentsChange}) {
-
-  function handleSubmit(evt) {
-    evt.preventDefault();
-    
-    api.editCone(height, radius, segments)
-      .then((res) => {
-        console.log("Успешно");
-      })
-      .catch((error) => {
-        console.error("Ошибка:", error);
-      });
-  }
+function Form({isValid, height, radius, segments, handleHeightChange, handleRadiusChange, handleSegmentsChange, handleSubmit}) {
   
-
-
-
   return (
     <div className="login">
       <p className="login__welcome">Сделай на свой вкус</p>
@@ -75,4 +59,5 @@ function Form({isValid, height, radius, segments, handleHeightChange, handleRadi
   );
 }
 
+export default Form;
 export default Form;

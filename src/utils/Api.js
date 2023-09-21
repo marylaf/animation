@@ -7,11 +7,14 @@ class Api {
   editCone(height, radius, segments) {
     return fetch(`${this._baseUrl}/triangulation`, {
       method: "POST",
-      headers: this._headers,
+      headers: {
+        ...this._headers,
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         height, radius, segments,
       }),
-    }).then(this._getResponseData);
+    }).then(this._getResponseData)
   }
 
   _getResponseData(res) {
