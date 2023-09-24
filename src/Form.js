@@ -60,4 +60,3 @@ function Form({isValid, height, radius, segments, handleHeightChange, handleRadi
 }
 
 export default Form;
-export default Form;

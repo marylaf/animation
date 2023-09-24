@@ -1,6 +1,5 @@
 import './index.css';
 import { useState } from "react";
-import { useState } from "react";
 import Visualisation from "./Visualisation";
 import Form from "./Form";
 import { api } from "./utils/Api";
